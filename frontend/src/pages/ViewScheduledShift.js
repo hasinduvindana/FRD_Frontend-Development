@@ -3,20 +3,22 @@ import autoTable from "jspdf-autotable";
 import { useEffect, useState } from "react";
 
 const ViewScheduledShift = () => {
+    const API_URL = process.env.REACT_APP_BACKEND_URL;
+    
     const [shifts, setShifts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [username, setUsername] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
     useEffect(() => {
-        fetch("http://localhost:8082/api/attendance/all")
+        fetch(`${API_URL}/api/attendance/all`)
             .then((response) => response.json())
             .then((data) => setShifts(data))
             .catch((error) => console.error("Error fetching shifts:", error));
-    }, []);
+    }, [API_URL]);
 
     useEffect(() => {
-        fetch("http://localhost:8082/api/auth/user", {
+        fetch(`${API_URL}/api/auth/user`, {
             method: "GET",
             credentials: "include",
         })
@@ -27,7 +29,7 @@ const ViewScheduledShift = () => {
                 }
             })
             .catch((error) => console.error("Error fetching user:", error));
-    }, []);
+    }, [API_URL]);
 
     const filteredShifts = shifts.filter(shift =>
         shift.supervisorNumber === username &&

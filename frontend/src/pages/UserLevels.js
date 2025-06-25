@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const UserLevels = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [userLevels, setUserLevels] = useState([]);
   const [newLevel, setNewLevel] = useState("");
 
-  useEffect(() => {
-    fetchUserLevels();
-  }, []);
-
-  const fetchUserLevels = async () => {
+  const fetchUserLevels = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8082/api/userlevels");
+      const response = await axios.get(`${API_URL}/api/userlevels`);
       setUserLevels(response.data);
     } catch (error) {
       console.error("Error fetching user levels:", error);
     }
-  };
+  }, [API_URL]);
+
+  useEffect(() => {
+    fetchUserLevels();
+  }, [fetchUserLevels]);
 
   const handleAdd = async () => {
     if (!newLevel.trim()) {
@@ -24,7 +26,7 @@ const UserLevels = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:8082/api/userlevels", {
+      const response = await axios.post(`${API_URL}/api/userlevels`, {
         userLevel: newLevel, // Ensure correct field name
       });
 
@@ -44,7 +46,7 @@ const UserLevels = () => {
     }
     try {
       // Sending `levelName` as a path parameter in the URL
-      await axios.delete(`http://localhost:8082/api/userlevels/${newLevel}`);
+      await axios.delete(`${API_URL}/api/userlevels/${newLevel}`);
 
       alert("User Level Deleted Successfully!");
       setUserLevels(userLevels.filter(level => level.userLevel !== newLevel)); // Remove deleted level

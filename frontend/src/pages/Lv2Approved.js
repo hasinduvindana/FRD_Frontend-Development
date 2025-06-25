@@ -2,17 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Lv2Approved = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/attendance/lv2-approved", {
+      .get(`${API_URL}/api/attendance/lv2-approved`, {
         withCredentials: true,
       })
       .then((response) => setShifts(response.data))
       .catch((error) => console.error("Error fetching approved shifts:", error));
-  }, []);
+  }, [API_URL]);
 
   const filteredShifts = shifts.filter((shift) =>
     ["name", "empId", "date", "designation"].some((key) =>

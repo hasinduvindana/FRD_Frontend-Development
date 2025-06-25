@@ -5,12 +5,13 @@ import SecuritySidebar from "../components/SecuritySidebar";
 
 
 const PetrolLeaderShift = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
-
   useEffect(() => {
-    fetch("http://localhost:8082/api/auth/user", {
+    fetch(`${API_URL}/api/auth/user`, {
       method: "GET",
       credentials: "include",
     })
@@ -21,18 +22,16 @@ const PetrolLeaderShift = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, []);
-
+  }, [API_URL]);
   useEffect(() => {
     if (username) {
       axios
-        .get(`http://localhost:8082/api/attendance/rejected/${username}`)
+        .get(`${API_URL}/api/attendance/rejected/${username}`)
         .then((response) => setShifts(response.data))
         .catch((error) =>
-          console.error("Error fetching rejected attendance data:", error)
-        );
+          console.error("Error fetching rejected attendance data:", error)        );
     }
-  }, [username]);
+  }, [API_URL, username]);
 
   const handleFieldChange = (id, field, value) => {
     setShifts((prevShifts) =>
@@ -41,11 +40,10 @@ const PetrolLeaderShift = () => {
       )
     );
   };
-
   const handleResubmit = async (shift) => {
     try {
       await axios.put(
-        `http://localhost:8082/api/attendance/resubmit/${shift.id}`,
+        `${API_URL}/api/attendance/resubmit/${shift.id}`,
         shift
       );
       alert("Shift resubmitted successfully!");
@@ -55,11 +53,10 @@ const PetrolLeaderShift = () => {
       alert("Failed to resubmit shift.");
     }
   };
-
   const handleDelete = async (shiftId) => {
     if (!window.confirm("Are you sure you want to delete this shift?")) return;
     try {
-      await axios.delete(`http://localhost:8082/api/attendance/${shiftId}`);
+      await axios.delete(`${API_URL}/api/attendance/${shiftId}`);
       alert("Shift deleted successfully!");
       setShifts((prevShifts) => prevShifts.filter((s) => s.id !== shiftId));
     } catch (error) {

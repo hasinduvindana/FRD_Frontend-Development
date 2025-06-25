@@ -59,9 +59,8 @@ const SecurityNavbar = () => {
   };
 
   const [username, setUsername] = useState("");
-
   useEffect(() => {
-    fetch("http://localhost:8082/api/auth/user", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user`, {
       method: "GET",
       credentials: "include", // Required for session-based authentication
     })

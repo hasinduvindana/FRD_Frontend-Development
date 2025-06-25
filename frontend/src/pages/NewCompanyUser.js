@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const NewCompanyUser = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [user, setUser] = useState({
     comuserName: "",
     comUserContact: "",
@@ -11,18 +13,16 @@ const NewCompanyUser = () => {
     tempPassword: "",
   });
   const [companies, setCompanies] = useState([]);
-
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/api/companies");
+        const response = await axios.get(`${API_URL}/api/companies`);
         setCompanies(response.data);
       } catch (error) {
         console.error("Error fetching companies", error);
-      }
-    };
+      }    };
     fetchCompanies();
-  }, []);
+  }, [API_URL]);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -43,9 +43,8 @@ const NewCompanyUser = () => {
     if (Object.values(user).some((value) => !value)) {
       alert("All fields are required!");
       return;
-    }
-    try {
-      await axios.post("http://localhost:8082/api/companyuser/company-users", user);
+    }    try {
+      await axios.post(`${API_URL}/api/companyuser/company-users`, user);
       alert("Company user added successfully!");
       clearForm();
     } catch (error) {

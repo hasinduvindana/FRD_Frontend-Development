@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For redirection
 
 const PendingApprovals = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedShifts, setSelectedShifts] = useState([]);
@@ -12,10 +14,9 @@ const PendingApprovals = () => {
   const [remarkInput, setRemarkInput] = useState('');
 
   const navigate = useNavigate(); // For redirecting after rejection
-
   // Get current logged in username
   useEffect(() => {
-    fetch("http://localhost:8082/api/auth/user", {
+    fetch(`${API_URL}/api/auth/user`, {
       method: "GET",
       credentials: "include",
     })
@@ -26,14 +27,13 @@ const PendingApprovals = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, []);
-
+  }, [API_URL]);
   // Fetch pending attendance shifts
   useEffect(() => {
-    axios.get("http://localhost:8082/api/attendance/pending")
+    axios.get(`${API_URL}/api/attendance/pending`)
       .then(response => setShifts(response.data))
       .catch(error => console.error("Error fetching pending attendance data:", error));
-  }, []);
+  }, [API_URL]);
 
   const handleCheckboxChange = (id) => {
     setSelectedShifts(prev =>
@@ -64,9 +64,7 @@ const PendingApprovals = () => {
       action: "Lv1 Approved",
       timeStamp: new Date().toISOString(),
       remarks: shift.remarks || ""
-    }));
-
-    axios.post("http://localhost:8082/api/approve-process/bulk", approvalData)
+    }));    axios.post(`${API_URL}/api/approve-process/bulk`, approvalData)
       .then(() => {
         alert(`Approved shifts: ${selectedShifts.join(", ")}`);
         setShifts(shifts.filter(shift => !selectedShifts.includes(shift.id)));
@@ -92,9 +90,7 @@ const PendingApprovals = () => {
       action: "Lv1Rejected",
       timeStamp: new Date().toISOString(),
       remarks: remarkInput // <-- This sends the remark input
-    }));
-
-    axios.post("http://localhost:8082/api/approve-process/bulk", rejectData)
+    }));    axios.post(`${API_URL}/api/approve-process/bulk`, rejectData)
       .then(() => {
         alert(`Rejected shifts: ${selectedShifts.join(", ")}`);
         setShifts(shifts.filter(shift => !selectedShifts.includes(shift.id)));

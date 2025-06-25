@@ -2,19 +2,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const ViewSecurityOfficerForm = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [officers, setOfficers] = useState([]);
 
   // Fetch security officers
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/security-officer")
+      .get(`${API_URL}/api/security-officer`)
       .then((response) => {
         setOfficers(response.data);
       })
       .catch((error) => {
         console.error("Error fetching security officers:", error);
       });
-  }, []);
+  }, [API_URL]);
 
   return (
     <div style={styles.pageContainer}>

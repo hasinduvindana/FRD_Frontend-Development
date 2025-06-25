@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 const AddInternalUser = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [name, setName] = useState("");
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [userLevel, setUserLevel] = useState("");
@@ -37,10 +39,8 @@ const AddInternalUser = () => {
     formData.append("employeeNumber", employeeNumber);
     formData.append("userLevel", userLevel);
     formData.append("email", emil);
-    
-
-    try {
-      const response = await fetch("http://localhost:8082/api/internal-users", {
+        try {
+      const response = await fetch(`${API_URL}/api/internal-users`, {
         method: "POST",
         body: formData, // No need to set content-type header, it will be set automatically
       });

@@ -59,50 +59,7 @@ const Header = styled.h2`
   margin-bottom: 50px;
 `;
 
-const CardsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-`;
-
-const Card = styled.div`
-  background-color: #f8fafc;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 25px 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: scale(1.07);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-const CardTitle = styled.h3`
-  font-size: 14px;
-  color: #334155;
-  margin-bottom: 12px;
-`;
-
-const CardNumber = styled.div`
-  font-size: 28px;
-  font-weight: bold;
-  color: #1e40af;
-`;
-
 const SecurityManagerDashboard = () => {
-  const totalOfficers = 8;
-  const presentOfficers = 4;
-  const absentOfficers = 3;
-  const onLeaveOfficers = 1;
-
   return (
     <PageWrapper>
       <ContentArea>
@@ -111,24 +68,6 @@ const SecurityManagerDashboard = () => {
           <ContentWrapper>
             <ContentInner>
               <Header>Security Manager Dashboard</Header>
-              <CardsContainer>
-                <Card>
-                  <CardTitle>Total Officers</CardTitle>
-                  <CardNumber>{totalOfficers}</CardNumber>
-                </Card>
-                <Card>
-                  <CardTitle>Present</CardTitle>
-                  <CardNumber>{presentOfficers}</CardNumber>
-                </Card>
-                <Card>
-                  <CardTitle>Absent</CardTitle>
-                  <CardNumber>{absentOfficers}</CardNumber>
-                </Card>
-                <Card>
-                  <CardTitle>On Leave</CardTitle>
-                  <CardNumber>{onLeaveOfficers}</CardNumber>
-                </Card>
-              </CardsContainer>
             </ContentInner>
           </ContentWrapper>
         </CenteredContainer>

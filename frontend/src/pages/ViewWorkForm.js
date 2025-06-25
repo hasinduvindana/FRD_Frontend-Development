@@ -5,6 +5,8 @@ import CompanySidebar from '../components/CompanySidebar';
 import CompanyUserNavbar from '../components/CompanyUserNavbar';
 
 const ViewWorkForm = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
   const [workData, setWorkData] = useState([]);
@@ -13,7 +15,7 @@ const ViewWorkForm = () => {
 
   useEffect(() => {
     // Fetch session username
-    fetch("http://localhost:8082/api/auth/user", {
+    fetch(`${API_URL}/api/auth/user`, {
       method: "GET",
       credentials: "include",
     })
@@ -23,7 +25,7 @@ const ViewWorkForm = () => {
           setUsername(data);
 
           // Once username is confirmed, fetch work data
-          fetch("http://localhost:8082/api/work-log/view", {
+          fetch(`${API_URL}/api/work-log/view`, {
             method: "GET",
             credentials: "include",
           })
@@ -35,7 +37,7 @@ const ViewWorkForm = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, []);
+  }, [API_URL]);
 
   const filteredData = workData.filter(item => {
     const matchesSearch =

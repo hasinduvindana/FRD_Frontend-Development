@@ -45,15 +45,12 @@ const ApprLv1SideBar = () => {
   return (
     <SidebarContainer>
       <SidebarList>
-        <SidebarButton onClick={() => navigate("/ApprLv1dashboard")}>
+        <SidebarButton onClick={() => navigate("/SecurityManagerDashboard")}>
           Home
         </SidebarButton>
-        <SidebarButton onClick={() => navigate("/AttendanceMarker")}>
+        <SidebarButton onClick={() => navigate("/SecurityManager")}>
           Attendance Marker
-        </SidebarButton>
-        <SidebarButton onClick={() => navigate("/Lv1Approved")}>
-          Approved List
-        </SidebarButton>
+        </SidebarButton>        
       </SidebarList>
        <SidebarButton onClick={() => navigate("/ApprovalHistorySM")}>
           Approval History

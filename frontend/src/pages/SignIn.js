@@ -5,6 +5,8 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
 
 const SignIn = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const navigate = useNavigate();
   const { instance } = useMsal();
 
@@ -51,11 +53,9 @@ const SignIn = () => {
   // Microsoft login for internal user
   const handleEmailClick = () => {
     instance.loginPopup(loginRequest).then((response) => {
-      const email = response.account.username;
-
-      axios
+      const email = response.account.username;      axios
         .post(
-          "http://localhost:8082/api/auth/internal",
+          `${API_URL}/api/auth/internal`,
           { email },
           { withCredentials: true }
         )
@@ -79,10 +79,8 @@ const SignIn = () => {
     if (!validateForm()) return;
 
     try {
-      const currentData = activeTab === 0 ? formData.company : formData.internal;
-
-      const response = await axios.post(
-        "http://localhost:8082/api/auth/login",
+      const currentData = activeTab === 0 ? formData.company : formData.internal;      const response = await axios.post(
+        `${API_URL}/api/auth/login`,
         null,
         {
           params:

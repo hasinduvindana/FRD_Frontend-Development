@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const AddSecurityOfficerForm = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  
   const [name, setName] = useState('');
   const [nic, setNic] = useState('');
   const [empId, setEmpId] = useState('');
@@ -10,21 +12,17 @@ const AddSecurityOfficerForm = () => {
   const [supervisor, setSupervisor] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [supervisors, setSupervisors] = useState([]);
-  const [companies, setCompanies] = useState([]);
-
-  // Fetch supervisors
+  const [companies, setCompanies] = useState([]);  // Fetch supervisors
   useEffect(() => {
-    axios.get('http://localhost:8082/api/security-officer/supervisors')
+    axios.get(`${API_URL}/api/security-officer/supervisors`)
       .then(response => setSupervisors(response.data))
       .catch(error => console.error('Error fetching supervisors:', error));
-  }, []);
-
-  // Fetch companies
+  }, [API_URL]);  // Fetch companies
   useEffect(() => {
-    axios.get('http://localhost:8082/api/security-officer/companies')
+    axios.get(`${API_URL}/api/security-officer/companies`)
       .then(response => setCompanies(response.data))
       .catch(error => console.error('Error fetching companies:', error));
-  }, []);
+  }, [API_URL]);
 
   const handleClear = () => {
     setName('');
@@ -42,10 +40,8 @@ const AddSecurityOfficerForm = () => {
     if (!name || !nic || !empId || !contactNumber || !address || !supervisor || !companyName) {
       alert('All fields are required!');
       return;
-    }
-
-    try {
-      const response = await axios.post('http://localhost:8082/api/security-officer/add', {
+    }    try {
+      const response = await axios.post(`${API_URL}/api/security-officer/add`, {
         name,
         nic,
         empId,
