@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { FaPowerOff } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const NavbarContainer = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #1565c0;
+  background-color: rgb(6, 44, 82);
   padding: 12px 0;
   display: flex;
   justify-content: space-between;

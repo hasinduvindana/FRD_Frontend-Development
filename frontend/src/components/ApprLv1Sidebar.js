@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 
 const SidebarContainer = styled.aside`
@@ -9,7 +8,7 @@ const SidebarContainer = styled.aside`
   top: 60px; /* Adjust based on navbar height */
   width: 250px;
   height: calc(100vh - 60px);
-  background-color: rgb(99, 159, 228);
+  background-color: rgb(6, 44, 82);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -28,17 +27,17 @@ const SidebarButton = styled.button`
   width: 100%;
   padding: 12px;
   border: none;
-  background-color: #1b1988;
+  background-color: rgb(6, 44, 82);
   color: white;
   font-size: 16px;
   font-weight: bold;
   border-radius: 6px;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0d0d5c;
+    background-color:rgb(9, 9, 9);
   }
 `;
 
@@ -61,8 +60,7 @@ const ApprLv1SideBar = () => {
         <SidebarButton onClick={() => navigate("/ApprL1")}>
           Rejected List
         </SidebarButton>
-        <SidebarButton> </SidebarButton>
-        <SidebarButton> </SidebarButton>
+        
         
       </SidebarList>
     </SidebarContainer>
