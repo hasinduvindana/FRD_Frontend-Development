@@ -1,10 +1,29 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 const ApprovalHistoryL1 = () => {
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [officerTypeFilter, setOfficerTypeFilter] = useState('');
   const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+
+  const fetchShifts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8082/api/approve-process');
+      const data = response.data.map(item => ({
+        nic: item.nicNumber,
+        officerType: item.officerType,
+        officerId: item.officerId,
+        action: item.action,
+        remarks: item.remarks,
+        timeStamp: item.timeStamp,
+      }));
+      setShifts(data);
+    } catch (error) {
+      console.error('Error fetching shift data:', error);
+    }
+  };
 
   const filteredShifts = shifts.filter(shift =>
     (['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
@@ -15,8 +34,7 @@ const ApprovalHistoryL1 = () => {
   );
 
   useEffect(() => {
-    // Example: Set dummy data or fetch from API here
-    // setShifts(fetchData());
+    fetchShifts();
   }, []);
 
   const handleDownload = () => {
