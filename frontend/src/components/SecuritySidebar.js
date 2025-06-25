@@ -55,10 +55,7 @@ const SecuritySidebar = () => {
         </SidebarButton>
         <SidebarButton onClick={() => navigate("/ViewScheduledShift")}>
           View Scheduled Shifts
-        </SidebarButton>
-        <SidebarButton onClick={() => navigate("/TimeShiftProgress")}>
-          Time Sheet Status
-        </SidebarButton>
+        </SidebarButton>       
         <SidebarButton onClick={() => navigate("/PetrolLeaderShift")}>
           Rejected Shifts
         </SidebarButton>  
