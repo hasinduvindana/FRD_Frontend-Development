@@ -79,28 +79,24 @@ const SignIn = () => {
     if (!validateForm()) return;
 
     try {
-<<<<<<< HEAD
-      const currentData = activeTab === 0 ? formData.company : formData.internal;      const response = await axios.post(
-=======
-      const currentData = activeTab === 0 ? formData.company : formData.internal;
+const currentData = activeTab === 0 ? formData.company : formData.internal;
 
-      const response = await axios.post(
->>>>>>> parent of 3298f34 (final update)
-        "http://localhost:8082/api/auth/login",
-        null,
-        {
-          params:
-            activeTab === 0
-              ? {
-                  username: currentData.username,
-                  password: currentData.password,
-                }
-              : {
-                  email: currentData.email,
-                },
-          withCredentials: true,
-        }
-      );
+const response = await axios.post(
+  "http://localhost:8082/api/auth/login",
+  null,
+  {
+    params:
+      activeTab === 0
+        ? {
+            username: currentData.username,
+            password: currentData.password,
+          }
+        : {
+            email: currentData.email,
+          },
+    withCredentials: true,
+  }
+);
 
       if (response.data.startsWith("redirect:")) {
         alert("Login Successful!");
