@@ -1,22 +1,36 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const TimeShiftProgress = () => {
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [officerTypeFilter, setOfficerTypeFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+  const [officerTypeFilter, setOfficerTypeFilter] = useState('');  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
 
+  const fetchShifts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8082/api/approve-process');
+      const data = response.data.map(item => ({
+        nic: item.nicNumber,
+        officerType: item.officerType,
+        officerId: item.officerId,
+        action: item.action,
+        remarks: item.remarks,
+        timeStamp: item.timeStamp,
+      }));
+      setShifts(data);
+    } catch (error) {
+      console.error('Error fetching shift data:', error);
+    }
+  };
   const filteredShifts = shifts.filter(shift =>
-    (['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
-      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+    ['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
+      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     ) &&
-    (officerTypeFilter ? shift.officerType === officerTypeFilter : true) &&
+    (officerTypeFilter ? shift.officerType?.toLowerCase() === officerTypeFilter.toLowerCase() : true) &&
     (dateFilter ? shift.timeStamp?.split('T')[0] === dateFilter : true)
   );
-
   useEffect(() => {
-    // Example: Set dummy data or fetch from API here
-    // setShifts(fetchData());
+    fetchShifts();
   }, []);
 
   const handleDownload = () => {
@@ -68,39 +82,40 @@ const TimeShiftProgress = () => {
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
             style={styles.datePicker}
-          />
-        </div>
+          />        </div>
 
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th style={styles.th}>NIC Number</th>
-              <th style={styles.th}>Officer Type</th>
-              <th style={styles.th}>Officer ID</th>
-              <th style={styles.th}>Action</th>
-              <th style={styles.th}>Remarks</th>
-              <th style={styles.th}>Time Stamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredShifts.length > 0 ? (
-              filteredShifts.map((shift, index) => (
-                <tr key={index}>
-                  <td style={styles.td}>{shift.nic}</td>
-                  <td style={styles.td}>{shift.officerType}</td>
-                  <td style={styles.td}>{shift.officerId}</td>
-                  <td style={styles.td}>{shift.action}</td>
-                  <td style={styles.td}>{shift.remarks}</td>
-                  <td style={styles.td}>{shift.timeStamp}</td>
-                </tr>
-              ))
-            ) : (
+        <div style={styles.tableContainer}>
+          <table style={styles.table}>
+            <thead>
               <tr>
-                <td colSpan="6" style={styles.noData}>No approval history found.</td>
+                <th style={styles.th}>NIC Number</th>
+                <th style={styles.th}>Officer Type</th>
+                <th style={styles.th}>Officer ID</th>
+                <th style={styles.th}>Action</th>
+                <th style={styles.th}>Remarks</th>
+                <th style={styles.th}>Time Stamp</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredShifts.length > 0 ? (
+                filteredShifts.map((shift, index) => (
+                  <tr key={index}>
+                    <td style={styles.td}>{shift.nic}</td>
+                    <td style={styles.td}>{shift.officerType}</td>
+                    <td style={styles.td}>{shift.officerId}</td>
+                    <td style={styles.td}>{shift.action}</td>
+                    <td style={styles.td}>{shift.remarks}</td>
+                    <td style={styles.td}>{shift.timeStamp}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" style={styles.noData}>No approval history found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <button style={styles.downloadBtn} onClick={handleDownload}>
           Download
@@ -158,14 +173,19 @@ const styles = {
   datePicker: {
     padding: '7px',
     borderRadius: '5px',
-    border: '1px solid #ccc',
-    fontSize: '14px',
+    border: '1px solid #ccc',    fontSize: '14px',
+  },
+  tableContainer: {
+    maxHeight: '400px',
+    overflowY: 'auto',
+    marginTop: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
-    marginTop: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   th: {
     backgroundColor: 'rgba(92, 158, 245, 0.9)',
