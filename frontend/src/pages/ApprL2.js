@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
+import { useEffect, useState } from "react";
 import ApprLv2Navbar from "../components/ApprLv2Navbar";
+import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
 
 const ApprL2 = () => {
   const [shifts, setShifts] = useState([]);
@@ -127,7 +127,7 @@ const styles = {
     width: "95%",
     maxWidth: "1130px",
     padding: "15px",
-    backgroundColor: "rgba(255, 255, 255, 0.55)",
+    backgroundColor: "rgba(255, 255, 255, 0.45)",
     borderRadius: "10px",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
     textAlign: "center",

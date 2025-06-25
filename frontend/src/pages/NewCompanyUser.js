@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const NewCompanyUser = () => {
   const [user, setUser] = useState({
@@ -68,7 +68,7 @@ const NewCompanyUser = () => {
     >
       <div
         style={{
-          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backgroundColor: "rgba(255, 255, 255, 0.45)",
           padding: "30px",
           borderRadius: "10px",
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
