@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const AddInternalUser = () => {
   const [name, setName] = useState("");
@@ -149,7 +149,7 @@ const styles = {
     width: "100%",
     maxWidth: "500px",
     padding: "20px",
-    background: "rgba(255, 255, 255, 0.4)", 
+    background: "rgba(255, 255, 255, 0.45)", 
     borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     backdropFilter: "blur(10px)",
@@ -157,8 +157,8 @@ const styles = {
   heading: { textAlign: "center", marginBottom: "20px" },
   inputGroup: { marginBottom: "15px" },
   label: { display: "block", fontWeight: "bold", marginBottom: "5px" },
-  input: { width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" },
-  select: { width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" },
+  input: { width: "90%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" },
+  select: { width: "90%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" },
   buttonGroup: { display: "flex", justifyContent: "space-between" },
   clearButton: { backgroundColor: "#f44336", color: "#fff", padding: "10px", borderRadius: "5px", cursor: "pointer" },
   submitButton: { backgroundColor: "#4CAF50", color: "#fff", padding: "10px", borderRadius: "5px", cursor: "pointer" },

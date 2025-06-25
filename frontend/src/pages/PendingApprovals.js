@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For redirection
 
 const PendingApprovals = () => {
@@ -224,7 +224,7 @@ const styles = {
     width: '95%',
     maxWidth: '1130px',
     padding: '15px',
-    backgroundColor: 'rgba(255, 255, 255, 0.55)',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
     borderRadius: '10px',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.5)',
     textAlign: 'center',

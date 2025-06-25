@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 
 const AddCompany = () => {
   const [company, setCompany] = useState({
@@ -97,7 +97,13 @@ const AddCompany = () => {
 
 const styles = {
   container: { display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" },
-  formContainer: { backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", width: "400px" },
+  formContainer: {
+  backgroundColor: "rgba(255, 255, 255, 0.47)", // semi-transparent white
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.45)",
+  width: "400px"
+},
   heading: { textAlign: "center", fontSize: "24px", fontWeight: "bold", marginBottom: "15px" },
   inputGroup: { marginBottom: "10px" },
   label: { fontWeight: "bold", display: "block", marginBottom: "5px" },
