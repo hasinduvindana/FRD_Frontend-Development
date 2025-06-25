@@ -92,12 +92,12 @@ const MainContent = styled.div`
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const securityPages = ["/petrolleaderdashboard", "/ViewScheduledShift", "/attendancemarker", "/TimeShiftProgress", "/PetrolLeaderDashboardView", "/PetrolLeaderShift"];
-  const apprLv1Pages = ["/ApprLv1dashboard", "/PendingApprovals", "/Lv1Approved", "TimeCardStatusL1", "/ApprL1"];
-   const apprLv2Pages = ["/ApprLv2Dashboard", "/PendingLv2Approvals", "/Lv2Approved", "TimeCardStatusL2", "/ApprL2"];
-    const apprLv3Pages = ["/ApprLv3Dashboard", "/PendingLv3Approvals", "/Lv3Approved", "TimeCardStatusL3"];
+  const securityPages = ["/petrolleaderdashboard", "/ViewScheduledShift", "/attendancemarker", "/TimeShiftProgress", "/PetrolLeaderDashboardView", "/PetrolLeaderShift", "/ApprovalHistory"];
+  const apprLv1Pages = ["/ApprLv1dashboard", "/PendingApprovals", "/Lv1Approved", "TimeCardStatusL1", "/ApprL1", "/ApprovalHistory"];
+   const apprLv2Pages = ["/ApprLv2Dashboard", "/PendingLv2Approvals", "/Lv2Approved", "TimeCardStatusL2", "/ApprL2", "/ApprovalHistory"];
+    const apprLv3Pages = ["/ApprLv3Dashboard", "/PendingLv3Approvals", "/Lv3Approved", "TimeCardStatusL3", "/ApprovalHistory"];
   //const apprLv2Pages = ["/approverlv2dashboard"];
-  const securityManagerPages = ["/SecurityManager","/SMNavbar", "/SMSidebar"];
+  const securityManagerPages = ["/SecurityManagerDashboard", "/SecurityManager","/SMNavbar", "/SMSidebar", "/ApprovalHistory"];
   const companyPages = ["/CompanyUserDashboard", "/ViewWorkForm", "/CompanyUserNavbar", "/CompanySidebar"];
 
   const isSecurityPage = securityPages.includes(location.pathname);
@@ -190,7 +190,7 @@ function App() {
           <Route path="/Lv1Approved" element={<Lv1Approved/>} />
           <Route path="/TimeShiftProgress" element={<TimeShiftProgress />} />
           
-          <Route path="/SecurityManager" element={<SecurityManager />} />
+          
           <Route path="/CompanyUserDashboard" element={<CompanyUserDashboard />} />
           <Route path="/TimeCardStatus1" element={<TimeCardStatus1 />} />
           <Route path="/TimeCardStatus2" element={<TimeCardStatus2 />} />
