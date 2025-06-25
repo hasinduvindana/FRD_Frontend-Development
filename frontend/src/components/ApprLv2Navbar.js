@@ -51,10 +51,9 @@ const LogoutButton = styled.button`
 const ApprLv2Navbar = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+
   useEffect(() => {
-    const API_URL = process.env.REACT_APP_BACKEND_URL;
-    
-    fetch(`${API_URL}/api/auth/user`, {
+    fetch("http://localhost:8082/api/auth/user", {
       method: "GET",
       credentials: "include",
     })

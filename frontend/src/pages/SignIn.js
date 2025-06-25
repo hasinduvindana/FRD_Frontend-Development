@@ -51,7 +51,9 @@ const SignIn = () => {
   // Microsoft login for internal user
   const handleEmailClick = () => {
     instance.loginPopup(loginRequest).then((response) => {
-      const email = response.account.username;      axios
+      const email = response.account.username;
+
+      axios
         .post(
           "http://localhost:8082/api/auth/internal",
           { email },
@@ -77,7 +79,13 @@ const SignIn = () => {
     if (!validateForm()) return;
 
     try {
+<<<<<<< HEAD
       const currentData = activeTab === 0 ? formData.company : formData.internal;      const response = await axios.post(
+=======
+      const currentData = activeTab === 0 ? formData.company : formData.internal;
+
+      const response = await axios.post(
+>>>>>>> parent of 3298f34 (final update)
         "http://localhost:8082/api/auth/login",
         null,
         {

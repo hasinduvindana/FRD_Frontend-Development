@@ -58,6 +58,7 @@ const ApprLv1Navbar = () => {
     navigate("/signin");
   };
   const [username, setUsername] = useState("");
+
   useEffect(() => {
     fetch("http://localhost:8082/api/auth/user", {
       method: "GET",

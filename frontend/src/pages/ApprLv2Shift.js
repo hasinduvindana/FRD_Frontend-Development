@@ -4,14 +4,12 @@ import ApprLv2Navbar from "../components/ApprLv2Navbar";
 import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
 
 const ApprLv2Shift = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/user`, {
+    fetch("http://localhost:8082/api/auth/user", {
       method: "GET",
       credentials: "include",
     })
@@ -22,18 +20,18 @@ const ApprLv2Shift = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, [API_URL]);
+  }, []);
 
   useEffect(() => {
     if (username) {
       axios
-        .get(`${API_URL}/api/attendance/rejected/${username}`)
+        .get(`http://localhost:8082/api/attendance/rejected/${username}`)
         .then((response) => setShifts(response.data))
         .catch((error) =>
           console.error("Error fetching rejected attendance data:", error)
         );
     }
-  }, [username, API_URL]);
+  }, [username]);
 
   const handleFieldChange = (id, field, value) => {
     setShifts((prevShifts) =>
@@ -45,8 +43,8 @@ const ApprLv2Shift = () => {
 
   const handleResubmit = async (shift) => {
     try {
-      await axios.put(
-        `${API_URL}/api/attendance/resubmit/${shift.id}`,
+      const response = await axios.put(
+        `http://localhost:8082/api/attendance/resubmit/${shift.id}`,
         shift
       );
       alert("Shift resubmitted successfully!");

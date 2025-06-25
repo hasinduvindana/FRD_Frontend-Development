@@ -1,16 +1,14 @@
-import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const TimeShiftProgress = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [officerTypeFilter, setOfficerTypeFilter] = useState('');  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
 
-  const fetchShifts = useCallback(async () => {
+  const fetchShifts = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/approve-process`);
+      const response = await axios.get('http://localhost:8082/api/approve-process');
       const data = response.data.map(item => ({
         nic: item.nicNumber,
         officerType: item.officerType,
@@ -23,7 +21,7 @@ const TimeShiftProgress = () => {
     } catch (error) {
       console.error('Error fetching shift data:', error);
     }
-  }, [API_URL]);
+  };
   const filteredShifts = shifts.filter(shift =>
     ['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
       shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,7 +31,7 @@ const TimeShiftProgress = () => {
   );
   useEffect(() => {
     fetchShifts();
-  }, [fetchShifts]);
+  }, []);
 
   const handleDownload = () => {
     const csvContent = [

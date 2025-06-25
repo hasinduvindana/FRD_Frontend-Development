@@ -39,9 +39,17 @@ const ApprLv1Shift = () => {
         shift.id === id ? { ...shift, [field]: value } : shift
       )
     );
+<<<<<<< HEAD
   };  const handleResubmit = async (shift) => {
     try {
       await axios.put(
+=======
+  };
+
+  const handleResubmit = async (shift) => {
+    try {
+      const response = await axios.put(
+>>>>>>> parent of 3298f34 (final update)
         `http://localhost:8082/api/attendance/resubmit/${shift.id}`,
         shift
       );

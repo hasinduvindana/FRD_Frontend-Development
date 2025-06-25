@@ -2,8 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 
 const AddCompany = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [company, setCompany] = useState({
     comName: "",
     comContactNo: "",
@@ -23,8 +21,10 @@ const AddCompany = () => {
     if (!company.comName || !company.comContactNo || !company.comAddress || !company.comEmail) {
       alert("All fields are required!");
       return;
-    }    try {
-      const response = await axios.post(`${API_URL}/api/companies`, company);
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8082/api/companies", company);
       alert(response+"Company added Successfully!!!"); 
       clearForm();
     } catch (error) {

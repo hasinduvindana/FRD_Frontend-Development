@@ -1,40 +1,23 @@
-import { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const ApprovalHistoryL2 = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [officerTypeFilter, setOfficerTypeFilter] = useState('');  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
-
-  const fetchShifts = useCallback(async () => {
-    try {
-      const response = await axios.get(`${API_URL}/api/approve-process`);
-      const data = response.data.map(item => ({
-        nic: item.nicNumber,
-        officerType: item.officerType,
-        officerId: item.officerId,
-        action: item.action,
-        remarks: item.remarks,
-        timeStamp: item.timeStamp,
-      }));
-      setShifts(data);
-    } catch (error) {
-      console.error('Error fetching shift data:', error);
-    }
-  }, [API_URL]);
+  const [officerTypeFilter, setOfficerTypeFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
 
   const filteredShifts = shifts.filter(shift =>
-    ['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
-      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    (['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
+      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))
     ) &&
-    (officerTypeFilter ? shift.officerType?.toLowerCase() === officerTypeFilter.toLowerCase() : true) &&
+    (officerTypeFilter ? shift.officerType === officerTypeFilter : true) &&
     (dateFilter ? shift.timeStamp?.split('T')[0] === dateFilter : true)
   );
+
   useEffect(() => {
-    fetchShifts();
-  }, [fetchShifts]);
+    // Example: Set dummy data or fetch from API here
+    // setShifts(fetchData());
+  }, []);
 
   const handleDownload = () => {
     const csvContent = [

@@ -92,8 +92,6 @@ const Td = styled.td`
 `;
 
 const AttendanceMarker = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [arrivalDate, setArrivalDate] = useState("");
   const [supervisorNumber, setSupervisorNumber] = useState("");
   const [entries, setEntries] = useState([]);
@@ -111,8 +109,9 @@ const AttendanceMarker = () => {
     "24 hours": 24,
     "36 hours": 36,
   };
+
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/user`, {
+    fetch("http://localhost:8082/api/auth/user", {
       method: "GET",
       credentials: "include",
     })
@@ -124,10 +123,11 @@ const AttendanceMarker = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, [API_URL, restingEmployees]);
+  }, [restingEmployees]);
+
   useEffect(() => {
     if (username) {
-      fetch(`${API_URL}/api/security-officer/get-officer?username=${username}`)
+      fetch(`http://localhost:8082/api/security-officer/get-officer?username=${username}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
@@ -159,7 +159,7 @@ const AttendanceMarker = () => {
         })
         .catch((error) => console.error("Error fetching names:", error));
     }
-  }, [API_URL, username]);
+  }, [username]);
 
   useEffect(() => {
     const now = Date.now();
@@ -168,9 +168,10 @@ const AttendanceMarker = () => {
       if (now < until) updated[empKey] = until;
     });
     if (Object.keys(updated).length !== Object.keys(restingEmployees).length) {
-      setRestingEmployees(updated);      localStorage.setItem("restingEmployees", JSON.stringify(updated));
+      setRestingEmployees(updated);
+      localStorage.setItem("restingEmployees", JSON.stringify(updated));
     }
-  }, [restingEmployees]);
+  }, []);
 
   const handleChange = (index, field, value) => {
     const updatedEntries = [...entries];
@@ -288,7 +289,9 @@ const AttendanceMarker = () => {
       }
     });
     setRestingEmployees(newResting);
-    localStorage.setItem("restingEmployees", JSON.stringify(newResting));    fetch(`${API_URL}/api/attendance/saveAll`, {
+    localStorage.setItem("restingEmployees", JSON.stringify(newResting));
+
+    fetch("http://localhost:8082/api/attendance/saveAll", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(attendanceData),
@@ -303,7 +306,7 @@ const AttendanceMarker = () => {
         return res.json();
       })
       .then(() =>
-        fetch(`${API_URL}/api/approve-process/saveAll`, {
+        fetch("http://localhost:8082/api/approve-process/saveAll", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(approvalData),
@@ -311,7 +314,7 @@ const AttendanceMarker = () => {
       )
       .then((res) => {
         if (!res.ok) throw new Error("Approve Process submission failed");
-        return fetch(`${API_URL}/api/work-log/update`, {
+        return fetch("http://localhost:8082/api/work-log/update", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(workLogData),

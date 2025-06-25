@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PendingLv2Approvals = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedShifts, setSelectedShifts] = useState([]);
@@ -14,31 +12,33 @@ const PendingLv2Approvals = () => {
   const [remarkInput, setRemarkInput] = useState('');
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/user`, {
+    fetch("http://localhost:8082/api/auth/user", {
       method: "GET",
       credentials: "include",
     })
       .then((response) => response.text())
-          .then((data) => {
-            if (data !== "No user logged in") {
-              setUsername(data);
-            }
-          })
-          .catch((error) => console.error("Error fetching user:", error));
-      }, [API_URL]);
+      .then((data) => {
+        if (data !== "No user logged in") {
+          setUsername(data);
+        }
+      })
+      .catch((error) => console.error("Error fetching user:", error));
+  }, []);
 
   useEffect(() => {
-    const fetchApprovedLv1Attendance = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/attendance/lv1-approved`);
-        setShifts(response.data);
-      } catch (error) {
-        console.error("Error fetching approved attendance:", error);
-      }
-    };
     fetchApprovedLv1Attendance();
-  }, [API_URL]);
+  }, []);
+
+  const fetchApprovedLv1Attendance = async () => {
+    try {
+      const response = await axios.get('http://localhost:8082/api/attendance/lv1-approved');
+      setShifts(response.data);
+    } catch (error) {
+      console.error("Error fetching approved attendance:", error);
+    }
+  };
 
   const handleCheckboxChange = (id) => {
     setSelectedShifts(prev =>
@@ -69,7 +69,9 @@ const PendingLv2Approvals = () => {
       action: "Lv2 Approved",
       timeStamp: new Date().toISOString(),
       remarks: shift.remarks || ""
-    }));    axios.post(`${API_URL}/api/approve-process/bulk`, approvalData)
+    }));
+
+    axios.post("http://localhost:8082/api/approve-process/bulk", approvalData)
       .then(() => {
         alert(`Approved shifts: ${selectedShifts.join(", ")}`);
         setShifts(shifts.filter(shift => !selectedShifts.includes(shift.id)));
@@ -95,7 +97,9 @@ const PendingLv2Approvals = () => {
       action: "Lv2 Rejected",
       timeStamp: new Date().toISOString(),
       remarks: remarkInput
-    }));    axios.post(`${API_URL}/api/approve-process/bulk`, rejectData)
+    }));
+
+    axios.post("http://localhost:8082/api/approve-process/bulk", rejectData)
       .then(() => {
         alert(`Rejected shifts: ${selectedShifts.join(", ")}`);
         setShifts(shifts.filter(shift => !selectedShifts.includes(shift.id)));
