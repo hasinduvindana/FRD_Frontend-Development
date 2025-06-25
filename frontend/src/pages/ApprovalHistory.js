@@ -123,7 +123,7 @@ const styles = {
   formContainer: {
   width: '85%',
   padding: '20px',
-  backgroundColor: 'rgba(255, 255, 255, 0.85)', // changed from 0.95 to 0.85
+  backgroundColor: 'rgba(255, 255, 255, 0.45)', // changed from 0.95 to 0.85
   borderRadius: '8px',
   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   textAlign: 'center',
