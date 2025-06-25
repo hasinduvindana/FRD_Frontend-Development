@@ -116,10 +116,10 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    backgroundImage: "url('background.png')",
+    paddingLeft: "280px",
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
+    backgroundPosition: 'center',
+  },
   formContainer: {
   width: '85%',
   padding: '20px',
