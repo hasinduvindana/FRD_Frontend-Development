@@ -98,7 +98,7 @@ const AddInternalUser = () => {
               >
                 <option value="">Select Level</option>
                 <option value="Petrol Leader">Petrol Leader</option>
-                <option value="Security Manager">Security Manager</option>
+                <option value="Security Manager ">Security Manager </option>
                 <option value="Approver Level 1">Approver Level 1</option>
                 <option value="Approver Level 2">Approver Level 2</option>
                 <option value="Approver Level 3">Approver Level 3</option>
