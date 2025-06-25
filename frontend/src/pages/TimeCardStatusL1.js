@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const TimeCardStatusL1 = () => {
   const [shifts, setShifts] = useState([]);
@@ -73,6 +73,8 @@ const styles = {
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: '24px',

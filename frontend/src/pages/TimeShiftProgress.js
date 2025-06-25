@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const TimeShiftProgress = () => {
   const [shifts, setShifts] = useState([]);
@@ -144,6 +144,8 @@ const styles = {
     textAlign: 'center',
     overflowY: 'auto',
     maxHeight: '90vh',
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: '24px',

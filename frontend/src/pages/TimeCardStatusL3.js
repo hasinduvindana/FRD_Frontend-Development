@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const TimeCardStatusL3 = () => {
   const [shifts, setShifts] = useState([]);
@@ -65,6 +65,8 @@ const styles = {
     backgroundImage: "url('background.png')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    overflowY: 'scroll',
+
   },
   formContainer: {
     width: '80%',

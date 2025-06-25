@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For redirection
 
 const PendingLv3Approvals = () => {
@@ -228,6 +228,8 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.5)',
     textAlign: 'center',
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: '24px',

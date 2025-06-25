@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useEffect, useState } from "react";
 
 const ViewScheduledShift = () => {
     const [shifts, setShifts] = useState([]);
@@ -168,6 +168,8 @@ const styles = {
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         textAlign: 'center',
+        overflowY: 'scroll',
+
     },
     heading: {
         fontSize: '22px',

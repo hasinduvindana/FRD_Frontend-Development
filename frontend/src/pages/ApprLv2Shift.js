@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
+import { useEffect, useState } from "react";
 import ApprLv2Navbar from "../components/ApprLv2Navbar";
+import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
 
 const ApprLv2Shift = () => {
   const [shifts, setShifts] = useState([]);
@@ -185,6 +185,8 @@ const styles = {
     borderRadius: "10px",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
     textAlign: "center",
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: "24px",

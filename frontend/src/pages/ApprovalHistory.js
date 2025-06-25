@@ -129,6 +129,8 @@ const styles = {
     textAlign: 'center',
     overflowY: 'scroll',
     maxHeight: '90vh',
+    
+
   },
   heading: {
     fontSize: '24px',

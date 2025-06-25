@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ViewSecurityOfficerForm = () => {
   const [officers, setOfficers] = useState([]);
@@ -74,6 +74,8 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     textAlign: "center",
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: "22px",

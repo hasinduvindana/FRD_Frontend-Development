@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import CompanyUserNavbar from '../components/CompanyUserNavbar';
-import CompanySidebar from '../components/CompanySidebar';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useEffect, useState } from "react";
+import CompanySidebar from '../components/CompanySidebar';
+import CompanyUserNavbar from '../components/CompanyUserNavbar';
 
 const ViewWorkForm = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -181,6 +181,8 @@ const styles = {
     padding: '40px',
     borderRadius: '10px',
     boxShadow: '0px 0px 20px rgba(0,0,0,0.2)',
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: '28px',

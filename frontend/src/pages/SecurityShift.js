@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import SMNavbar from "../components/SMNavbar";
 import SMSidebar from "../components/SMSidebar";
 
@@ -188,6 +188,8 @@ const styles = {
     borderRadius: "10px",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
     textAlign: "center",
+    overflowY: 'scroll',
+
   },
   heading: {
     fontSize: "24px",
