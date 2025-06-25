@@ -87,7 +87,7 @@ const Sidebar = () => {
         <SidebarButton onClick={() => navigate("/viewsecurityofficer")}>
           View Security Employee
         </SidebarButton>
-        <SidebarButton onClick={() => navigate("/TimeShiftProgress")}>
+        <SidebarButton onClick={() => navigate("/ApprovalHistory")}>
           Approval History
         </SidebarButton>
       </SidebarList>

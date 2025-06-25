@@ -57,6 +57,7 @@ import ApprL2 from './pages/ApprL2';
 import ApprL3 from './pages/ApprL3';
 import ApprLv1Shift from './pages/ApprLv1Shift';
 import ApprLv2Shift from './pages/ApprLv2Shift';
+import ApprovalHistory from "./pages/ApprovalHistory";
 import ApprovalHistoryL1 from "./pages/ApprovalHistoryL1";
 import ApprovalHistoryL2 from "./pages/ApprovalHistoryL2";
 import ApprovalHistoryL3 from "./pages/ApprovalHistoryL3";
@@ -243,6 +244,7 @@ function App() {
           <Route path="/ApprovalHistoryL3" element={<ApprovalHistoryL3 />} />
           <Route path="/ApprovalHistorySM" element={<ApprovalHistorySM />} />
           <Route path="/ApprovalHistoryPLD" element={<ApprovalHistoryPLD />} />
+          <Route path="/ApprovalHistory" element={<ApprovalHistory />} />
           
       
           

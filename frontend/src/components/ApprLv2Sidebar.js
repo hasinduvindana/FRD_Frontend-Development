@@ -58,7 +58,7 @@ const ApprLv2SideBar = () => {
           Rejected List
         </SidebarButton>
       </SidebarList>
-       <SidebarButton onClick={() => navigate("/TimeShiftProgress")}>
+       <SidebarButton onClick={() => navigate("/ApprovalHistoryL2")}>
           Approval History
         </SidebarButton>
     </SidebarContainer>
