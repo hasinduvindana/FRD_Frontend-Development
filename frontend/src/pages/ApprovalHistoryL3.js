@@ -127,7 +127,7 @@ const styles = {
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
-    overflowY: 'auto',
+    overflowY: 'scroll',
     maxHeight: '90vh',
   },
   heading: {
