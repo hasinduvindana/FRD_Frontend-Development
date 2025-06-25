@@ -1,0 +1,139 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const TimeShiftProgress = () => {
+  const [shifts, setShifts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    fetchShifts();
+  }, []);
+
+  const fetchShifts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8082/api/approve-process');
+      const data = response.data.map(item => ({
+        nic: item.nicNumber,
+        officerType: item.officerType,
+        officerId: item.officerId,
+        action: item.action,
+        remarks: item.remarks,
+      }));
+      setShifts(data);
+    } catch (error) {
+      console.error('Error fetching shift data:', error);
+    }
+  };
+
+  const filteredShifts = shifts.filter(shift =>
+    ['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
+      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  return (
+    <div style={styles.pageContainer}>
+      <div style={styles.formContainer}>
+        <h2 style={styles.heading}>Time Shift Progress</h2>
+        <input
+          type="text"
+          placeholder="Search by NIC, Officer Type, ID, Action, or Remarks..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={styles.searchBar}
+        />
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>NIC Number</th>
+              <th style={styles.th}>Officer Type</th>
+              <th style={styles.th}>Officer ID</th>
+              <th style={styles.th}>Action</th>
+              <th style={styles.th}>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredShifts.length > 0 ? (
+              filteredShifts.map((shift, index) => (
+                <tr key={index}>
+                  <td style={styles.td}>{shift.nic}</td>
+                  <td style={styles.td}>{shift.officerType}</td>
+                  <td style={styles.td}>{shift.officerId}</td>
+                  <td style={styles.td}>{shift.action}</td>
+                  <td style={styles.td}>{shift.remarks}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" style={styles.noData}>No shift progress records found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const styles = {
+  pageContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    paddingLeft: "280px",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  formContainer: {
+    width: '80%',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+  },
+  heading: {
+    fontSize: '24px',
+    color: 'black',
+    marginBottom: '20px',
+    fontWeight: 'bold',
+  },
+  searchBar: {
+    width: '100%',
+    padding: '9px',
+    marginBottom: '20px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '16px',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginTop: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  },
+  th: {
+    backgroundColor: 'rgba(92, 158, 245, 0.9)',
+    color: 'black',
+    padding: '12px',
+    border: '1px solid #ddd',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  td: {
+    padding: '12px',
+    border: '1px solid #ddd',
+    textAlign: 'center',
+    fontSize: '16px',
+  },
+  noData: {
+    padding: '12px',
+    textAlign: 'center',
+    fontSize: '16px',
+    fontStyle: 'italic',
+    color: '#888',
+  },
+};
+
+export default TimeShiftProgress;
