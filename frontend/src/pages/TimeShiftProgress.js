@@ -1,47 +1,76 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const TimeShiftProgress = () => {
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    fetchShifts();
-  }, []);
-
-  const fetchShifts = async () => {
-    try {
-      const response = await axios.get('http://localhost:8082/api/approve-process');
-      const data = response.data.map(item => ({
-        nic: item.nicNumber,
-        officerType: item.officerType,
-        officerId: item.officerId,
-        action: item.action,
-        remarks: item.remarks,
-      }));
-      setShifts(data);
-    } catch (error) {
-      console.error('Error fetching shift data:', error);
-    }
-  };
+  const [officerTypeFilter, setOfficerTypeFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
 
   const filteredShifts = shifts.filter(shift =>
-    ['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
-      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    (['nic', 'officerType', 'officerId', 'action', 'remarks'].some(key =>
+      shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+    ) &&
+    (officerTypeFilter ? shift.officerType === officerTypeFilter : true) &&
+    (dateFilter ? shift.timeStamp?.split('T')[0] === dateFilter : true)
   );
+
+  useEffect(() => {
+    // Example: Set dummy data or fetch from API here
+    // setShifts(fetchData());
+  }, []);
+
+  const handleDownload = () => {
+    const csvContent = [
+      ['NIC', 'Officer Type', 'Officer ID', 'Action', 'Remarks', 'Time Stamp'],
+      ...filteredShifts.map(row =>
+        [row.nic, row.officerType, row.officerId, row.action, row.remarks, row.timeStamp]
+      ),
+    ].map(e => e.join(',')).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "approval_history.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div style={styles.pageContainer}>
       <div style={styles.formContainer}>
-        <h2 style={styles.heading}>Time Shift Progress</h2>
-        <input
+        <h2 style={styles.heading}>Approval History</h2>
+
+        <div style={styles.filtersRow}>
+         <input
           type="text"
           placeholder="Search by NIC, Officer Type, ID, Action, or Remarks..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={styles.searchBar}
         />
+
+          <select
+            value={officerTypeFilter}
+            onChange={(e) => setOfficerTypeFilter(e.target.value)}
+            style={styles.select}
+          >
+            <option value="">Officer Types</option>
+            <option value="petrolleader">Petrol Leader</option>
+            <option value="security manager">Security Manager</option>
+            <option value="approver level 1">Approver Level 1</option>
+            <option value="approver level 2">Approver Level 2</option>
+            <option value="approver level 3">Approver Level 3</option>
+          </select>
+
+          <input
+            type="date"
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            style={styles.datePicker}
+          />
+        </div>
+
         <table style={styles.table}>
           <thead>
             <tr>
@@ -50,6 +79,7 @@ const TimeShiftProgress = () => {
               <th style={styles.th}>Officer ID</th>
               <th style={styles.th}>Action</th>
               <th style={styles.th}>Remarks</th>
+              <th style={styles.th}>Time Stamp</th>
             </tr>
           </thead>
           <tbody>
@@ -61,15 +91,20 @@ const TimeShiftProgress = () => {
                   <td style={styles.td}>{shift.officerId}</td>
                   <td style={styles.td}>{shift.action}</td>
                   <td style={styles.td}>{shift.remarks}</td>
+                  <td style={styles.td}>{shift.timeStamp}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={styles.noData}>No shift progress records found.</td>
+                <td colSpan="6" style={styles.noData}>No approval history found.</td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <button style={styles.downloadBtn} onClick={handleDownload}>
+          Download
+        </button>
       </div>
     </div>
   );
@@ -81,31 +116,50 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    paddingLeft: "280px",
+    backgroundImage: "url('background.png')",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
   formContainer: {
-    width: '80%',
-    padding: '20px',
-    backgroundColor: 'rgba(255, 255, 255, 0.45)',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
-  },
+  width: '85%',
+  padding: '20px',
+  backgroundColor: 'rgba(255, 255, 255, 0.45)', // changed from 0.95 to 0.85
+  borderRadius: '8px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  textAlign: 'center',
+},
+
   heading: {
     fontSize: '24px',
     color: 'black',
     marginBottom: '20px',
     fontWeight: 'bold',
   },
-  searchBar: {
-    width: '100%',
-    padding: '9px',
+  filtersRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '10px',
     marginBottom: '20px',
+  },
+  searchBar: {
+    flex: '1',
+    minWidth: '180px',
+    padding: '7px',
     border: '1px solid #ccc',
     borderRadius: '5px',
-    fontSize: '16px',
+    fontSize: '14px',
+  },
+  select: {
+    padding: '7px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    fontSize: '14px',
+  },
+  datePicker: {
+    padding: '7px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    fontSize: '14px',
   },
   table: {
     width: '100%',
@@ -133,6 +187,16 @@ const styles = {
     fontSize: '16px',
     fontStyle: 'italic',
     color: '#888',
+  },
+  downloadBtn: {
+    marginTop: '20px',
+    padding: '10px 20px',
+    backgroundColor: '#5c9ef5',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    fontSize: '16px',
+    cursor: 'pointer',
   },
 };
 
