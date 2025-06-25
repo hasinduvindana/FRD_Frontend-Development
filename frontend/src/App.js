@@ -1,49 +1,48 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
-import AddCompany from "./pages/AddCompany";
-import NewCompanyUser from "./pages/NewCompanyUser";
-import UserLevels from "./pages/UserLevels";
-import AddInternalUserForm from "./pages/AddInternal";
-import SignIn from "./pages/SignIn";
-import SecurityNavbar from "./components/SecurityNavbar";
-import SecuritySidebar from "./components/SecuritySidebar";
-import AttendanceMarker from "./pages/AttendanceMarker";
-import AddSecurityOfficerForm from "./pages/AddSecurityOfficerForm";
-import ViewSecurityOfficerForm from "./pages/ViewSecurityOfficerForm";
-import ViewScheduledShift from "./pages/ViewScheduledShift";
 import ApprLv1Navbar from "./components/ApprLv1Navbar";
 import ApprLv1SideBar from "./components/ApprLv1Sidebar";
-import ApprLv2SideBar from "./components/ApprLv2Sidebar";
 import ApprLv2Navbar from "./components/ApprLv2Navbar";
+import ApprLv2SideBar from "./components/ApprLv2Sidebar";
 import ApprLv3Navbar from "./components/ApprLv3Navbar";
 import ApprLv3SideBar from "./components/ApprLv3SideBar";
+import Navbar from "./components/Navbar";
+import SecurityNavbar from "./components/SecurityNavbar";
+import SecuritySidebar from "./components/SecuritySidebar";
+import Sidebar from "./components/Sidebar";
 import SMNavbar from './components/SMNavbar';
 import SMSidebar from "./components/SMSidebar";
+import AddCompany from "./pages/AddCompany";
+import AddInternalUserForm from "./pages/AddInternal";
+import AddSecurityOfficerForm from "./pages/AddSecurityOfficerForm";
 import AdminDashboard from "./pages/AdminDashboard";
+import AttendanceMarker from "./pages/AttendanceMarker";
+import NewCompanyUser from "./pages/NewCompanyUser";
+import SignIn from "./pages/SignIn";
+import UserLevels from "./pages/UserLevels";
+import ViewScheduledShift from "./pages/ViewScheduledShift";
+import ViewSecurityOfficerForm from "./pages/ViewSecurityOfficerForm";
 
-import PendingApprovals from "./pages/PendingApprovals";
-import PendingLv2Approvals from "./pages/PendingLv2Approvals";
-import PendingLv3Approvals from "./pages/PendingLv3Approvals";
+import { loginRequest } from "./authConfig";
+import CompanySidebar from "./components/CompanySidebar";
+import CompanyUserNavbar from "./components/CompanyUserNavbar";
+import ApprLv1Dashboard from "./pages/ApprLv1Dashboard";
+import ApprLv2Dashboard from "./pages/ApprLv2Dashboard";
+import ApprLv3Dashboard from "./pages/ApprLv3Dashboard";
+import CompanyUserDashboard from "./pages/CompanyUserDashboard";
 import Lv1Approved from "./pages/Lv1Approved";
 import Lv2Approved from "./pages/Lv2Approved";
 import Lv3Approved from "./pages/Lv3Approved";
+import PendingApprovals from "./pages/PendingApprovals";
+import PendingLv2Approvals from "./pages/PendingLv2Approvals";
+import PendingLv3Approvals from "./pages/PendingLv3Approvals";
+import SecurityManager from "./pages/SecurityManager";
+import TimeCardStatus1 from "./pages/TimeCardStatusL1";
 import TimeCardStatus2 from "./pages/TimeCardStatusL2";
 import TimeCardStatus3 from "./pages/TimeCardStatusL3";
 import TimeShiftProgress from "./pages/TimeShiftProgress";
-import SecurityManager from "./pages/SecurityManager";
-import CompanyUserDashboard from "./pages/CompanyUserDashboard";
-import CompanySidebar from "./components/CompanySidebar";
-import CompanyUserNavbar from "./components/CompanyUserNavbar";
-import TimeCardStatus1 from "./pages/TimeCardStatusL1";
-import ApprLv1Dashboard from "./pages/ApprLv1Dashboard";
-import ApprLv2Dashboard from "./pages/ApprLv2Dashboard";
-import ApprLv3Dashboard from "./pages/ApprLv3Dashboard"
 import ViewWorkForm from "./pages/ViewWorkForm";
-import { loginRequest } from "./authConfig";
 
 
 
@@ -52,17 +51,18 @@ import { loginRequest } from "./authConfig";
 
 
 
+import AdminView from "./pages/AdminView";
 import ApprL1 from './pages/ApprL1';
 import ApprL2 from './pages/ApprL2';
 import ApprL3 from './pages/ApprL3';
-import AdminView from "./pages/AdminView";
-import SecurityManagerDashboard from "./pages/SecurityManagerDashboard";
-import PetrolLeaderDashboardView from "./pages/PetrolLeaderDashboardView";  
-import SecurityShift from "./pages/SecurityShift";
-import PetrolLeaderShift from "./pages/PetrolLeaderShift";
 import ApprLv1Shift from './pages/ApprLv1Shift';
 import ApprLv2Shift from './pages/ApprLv2Shift';
+import ApprovalHistory from "./pages/ApprovalHistory";
+import PetrolLeaderDashboardView from "./pages/PetrolLeaderDashboardView";
 import PetrolLeaderDashboardView2 from "./pages/PetrolLeaderDashboardView2";
+import PetrolLeaderShift from "./pages/PetrolLeaderShift";
+import SecurityManagerDashboard from "./pages/SecurityManagerDashboard";
+import SecurityShift from "./pages/SecurityShift";
 
 
 
@@ -235,6 +235,7 @@ function App() {
           <Route path="/ApprLv1Shift" element={<ApprLv1Shift />} />
           <Route path="/ApprLv2Shift" element={<ApprLv2Shift />} />
           <Route path="/PetrolLeaderDashboardView2" element={<PetrolLeaderDashboardView2 />} />
+          <Route path="/ApprovalHistory" element={<ApprovalHistory />} />
           
       
           
