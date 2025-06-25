@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SecuritySidebar from "../components/SecuritySidebar";
+import { useEffect, useState } from "react";
 import SecurityNavbar from "../components/SecurityNavbar";
+import SecuritySidebar from "../components/SecuritySidebar";
 
 
 const PetrolLeaderShift = () => {
@@ -190,13 +190,15 @@ const PetrolLeaderShift = () => {
 
 const styles = {
   pageContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    paddingLeft: "280px",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
+
   formContainer: {
     width: "95%",
     maxWidth: "1130px",
