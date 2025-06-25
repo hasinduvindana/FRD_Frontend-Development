@@ -43,12 +43,12 @@ const ViewScheduledShift = () => {
         logo.src = "/logo.png"; // Make sure logo.png is in public/
 
         logo.onload = () => {
-            doc.addImage(logo, "PNG", 10, 10, 25, 25);
+            doc.addImage(logo, "PNG", 10, 10, 35, 25);
             doc.setFontSize(16);
-            doc.text("Attendance Report", 40, 20);
+            doc.text("Security Attendance Report", 70, 20);
             doc.setFontSize(11);
-            doc.text(`Supervisor Number: ${username}`, 40, 28);
-            doc.text(`Downloaded: ${new Date().toLocaleString()}`, 40, 35);
+            doc.text(`Supervisor Number: ${username}`, 140, 28);
+            doc.text(`Downloaded Date: ${new Date().toLocaleString()}`, 140, 35);
 
             const columns = [
                 "Name", "NIC", "Designation", "Location", "Arrival Date", "Arrival Time",
@@ -61,7 +61,7 @@ const ViewScheduledShift = () => {
                 shift.present, shift.shiftType, shift.remarks
             ]);
 
-            doc.autoTable({
+            autoTable(doc, {
                 startY: 45,
                 head: [columns],
                 body: rows,
