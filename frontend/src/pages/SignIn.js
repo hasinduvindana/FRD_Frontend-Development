@@ -5,8 +5,6 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
 
 const SignIn = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const navigate = useNavigate();
   const { instance } = useMsal();
 
@@ -55,7 +53,7 @@ const SignIn = () => {
     instance.loginPopup(loginRequest).then((response) => {
       const email = response.account.username;      axios
         .post(
-          `${API_URL}/api/auth/internal`,
+          "http://localhost:8082/api/auth/internal",
           { email },
           { withCredentials: true }
         )
@@ -80,7 +78,7 @@ const SignIn = () => {
 
     try {
       const currentData = activeTab === 0 ? formData.company : formData.internal;      const response = await axios.post(
-        `${API_URL}/api/auth/login`,
+        "http://localhost:8082/api/auth/login",
         null,
         {
           params:

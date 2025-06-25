@@ -4,14 +4,12 @@ import ApprLv2Navbar from "../components/ApprLv2Navbar";
 import ApprLv2Sidebar from "../components/ApprLv2Sidebar";
 
 const ApprL2 = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/user`, {
+    fetch("http://localhost:8082/api/auth/user", {
       method: "GET",
       credentials: "include",
     })
@@ -22,17 +20,17 @@ const ApprL2 = () => {
         }
       })
       .catch((error) => console.error("Error fetching user:", error));
-  }, [API_URL]);
+  }, []);
 
   useEffect(() => {
     if (!username) return;
     axios
-      .get(`${API_URL}/api/attendance/rejected-2/${username}`)
+      .get(`http://localhost:8082/api/attendance/rejected-2/${username}`)
       .then((response) => setShifts(response.data))
       .catch((error) =>
         console.error("Error fetching rejected attendance data:", error)
       );
-  }, [username, API_URL]);
+  }, [username]);
 
   const filteredShifts = shifts.filter((shift) =>
     ["name", "nic", "arrivalDate", "designation", "remarks"].some((key) =>
