@@ -151,7 +151,7 @@ const AttendanceMarker = () => {
             departureDate: "",
             departureTime: "",
             remarks: "",
-            present: "Present",
+            attendance: "Present",
             urgent: false,
             urgentReason: "",
           }));
@@ -199,6 +199,23 @@ const AttendanceMarker = () => {
     return until && Date.now() < until;
   }
 
+  function isShiftEnded(entry) {
+    if (!entry.arrivalTime || !entry.shiftType || !arrivalDate) return false;
+    
+    const shiftDurationHours = shiftDurations[entry.shiftType];
+    if (!shiftDurationHours) return false;
+    
+    // Create shift start datetime
+    const shiftStart = new Date(`${arrivalDate}T${entry.arrivalTime}`);
+    
+    // Calculate shift end time
+    const shiftEnd = new Date(shiftStart.getTime() + (shiftDurationHours * 60 * 60 * 1000));
+    
+    // Check if current time is past shift end time
+    const now = new Date();
+    return now > shiftEnd;
+  }
+
   function qualifiesForRest(entry, entries) {
     const empKey = entry.nic || entry.empId;
     if (!empKey) return false;
@@ -211,7 +228,6 @@ const AttendanceMarker = () => {
     });
     return totalHours >= 24;
   }
-
   const handleSubmit = () => {
     if (!arrivalDate || !supervisorNumber) {
       alert("Arrival Date and Supervisor Number are required!");
@@ -220,10 +236,21 @@ const AttendanceMarker = () => {
 
     for (let i = 0; i < entries.length; i++) {
       const e = entries[i];
-      if (!e.designation || !e.location || !e.name || !e.arrivalTime || !e.departureDate || !e.departureTime) {
-        alert(`Please fill in all fields for entry ${i + 1}`);
-        return;
+      
+      // If attendance is "Absent", only check for name (which is always filled from API)
+      if (e.present === "Absent") {
+        if (!e.name) {
+          alert(`Name is required for entry ${i + 1}`);
+          return;
+        }
+      } else {
+        // For "Present" attendance, all fields are required
+        if (!e.designation || !e.location || !e.name || !e.arrivalTime || !e.departureDate || !e.departureTime) {
+          alert(`Please fill in all fields for entry ${i + 1}`);
+          return;
+        }
       }
+      
       if (e.urgent && !e.urgentReason) {
         alert(`Please enter a reason for urgent entry at row ${i + 1}`);
         return;
@@ -333,14 +360,13 @@ const AttendanceMarker = () => {
                 <Th>Arrival Time</Th>
                 <Th>Departure Date</Th>
                 <Th>Departure Time</Th>
-                <Th>Present</Th>
+                <Th>Attendance</Th>
                 <Th>Shift Type</Th>                
                 <Th>Remarks</Th>
               </tr>
-            </thead>
-            <tbody>
+            </thead>            <tbody>
               {entries
-                .filter(entry => !isEmployeeResting(entry))
+                .filter(entry => !isEmployeeResting(entry) && !isShiftEnded(entry))
                 .map((entry, index) => (
                   <tr key={index}>
                     <Td><input type="text" value={entry.name} readOnly /></Td>
@@ -352,7 +378,7 @@ const AttendanceMarker = () => {
                     <Td><input type="date" value={entry.departureDate} readOnly /></Td>
                     <Td><input type="time" value={entry.departureTime} readOnly /></Td>
                     <Td>
-                      <select value={entry.present} onChange={(e) => handleChange(index, "present", e.target.value)}>
+                      <select value={entry.present} onChange={(e) => handleChange(index, "attendance", e.target.value)}>
                         <option value="Present">Present</option>
                         <option value="Absent">Absent</option>
                       </select>
