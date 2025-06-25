@@ -58,6 +58,9 @@ const ApprLv2SideBar = () => {
           Rejected List
         </SidebarButton>
       </SidebarList>
+       <SidebarButton onClick={() => navigate("/ApprovalHistory")}>
+          Approval History
+        </SidebarButton>
     </SidebarContainer>
   );
 };

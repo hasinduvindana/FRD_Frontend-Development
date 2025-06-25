@@ -61,7 +61,10 @@ const SecuritySidebar = () => {
         </SidebarButton>
         <SidebarButton onClick={() => navigate("/PetrolLeaderShift")}>
           Rejected Shifts
-        </SidebarButton>        
+        </SidebarButton>  
+         <SidebarButton onClick={() => navigate("/ApprovalHistory")}>
+          Approval History
+        </SidebarButton>      
         
       </SidebarList>
     </SidebarContainer>

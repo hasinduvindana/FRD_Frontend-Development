@@ -49,6 +49,9 @@ const CompanySidebar = () => {
           View Work
         </SidebarButton>
       </SidebarList>
+       <SidebarButton onClick={() => navigate("/ApprovalHistory")}>
+          Approval History
+        </SidebarButton>
     </SidebarContainer>
   );
 };
