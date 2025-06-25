@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const ViewScheduledShift = () => {
     const [shifts, setShifts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [username, setUsername] = useState("");
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
     useEffect(() => {
-        // Fetch all attendance records
         fetch("http://localhost:8082/api/attendance/all")
             .then((response) => response.json())
             .then((data) => setShifts(data))
@@ -14,7 +16,6 @@ const ViewScheduledShift = () => {
     }, []);
 
     useEffect(() => {
-        // Fetch the logged-in username
         fetch("http://localhost:8082/api/auth/user", {
             method: "GET",
             credentials: "include",
@@ -28,25 +29,82 @@ const ViewScheduledShift = () => {
             .catch((error) => console.error("Error fetching user:", error));
     }, []);
 
-    // Filter shifts based on search term and logged-in username
     const filteredShifts = shifts.filter(shift =>
-        shift.supervisorNumber === username && 
+        shift.supervisorNumber === username &&
+        shift.arrivalDate === selectedDate &&
         ["id", "name", "location", "shiftType"].some(key =>
             shift[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
 
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        const logo = new Image();
+        logo.src = "/logo.png"; // Make sure logo.png is in public/
+
+        logo.onload = () => {
+            doc.addImage(logo, "PNG", 10, 10, 25, 25);
+            doc.setFontSize(16);
+            doc.text("Attendance Report", 40, 20);
+            doc.setFontSize(11);
+            doc.text(`Supervisor Number: ${username}`, 40, 28);
+            doc.text(`Downloaded: ${new Date().toLocaleString()}`, 40, 35);
+
+            const columns = [
+                "Name", "NIC", "Designation", "Location", "Arrival Date", "Arrival Time",
+                "Departure Date", "Departure Time", "Attendance", "Shift Type", "Remarks"
+            ];
+            const rows = filteredShifts.map(shift => [
+                shift.name, shift.nic, shift.designation, shift.location,
+                shift.arrivalDate, shift.arrivalTime,
+                shift.departureDate, shift.departureTime,
+                shift.present, shift.shiftType, shift.remarks
+            ]);
+
+            doc.autoTable({
+                startY: 45,
+                head: [columns],
+                body: rows,
+                styles: { fontSize: 8, halign: 'center' },
+                didDrawPage: (data) => {
+                    const pageCount = doc.internal.getNumberOfPages();
+                    const pageSize = doc.internal.pageSize;
+                    const pageHeight = pageSize.height;
+                    doc.setFontSize(10);
+                    doc.text(`Page ${data.pageNumber} of ${pageCount}`, pageSize.width / 2, pageHeight - 10, { align: "center" });
+                }
+            });
+
+            // Add current date to filename
+            const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            doc.save(`Security_Attendance_Report_${currentDate}.pdf`);
+        };
+    };
+
     return (
         <div style={styles.pageContainer}>
             <div style={styles.formContainer}>
                 <h2 style={styles.heading}>Scheduled Shifts</h2>
-                <input
-                    type="text"
-                    placeholder="Search by ID, Name, Location..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={styles.searchBar}
-                />
+
+                <div style={styles.filtersContainer}>
+                    <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        style={{ ...styles.searchBar, width: "30%" }}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Search by ID, Name, Location..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ ...styles.searchBar, width: "50%" }}
+                    />
+                    <button onClick={downloadPDF} style={styles.downloadButton}>
+                        Download PDF
+                    </button>
+                </div>
+
                 <table style={styles.table}>
                     <thead>
                         <tr>
@@ -99,14 +157,14 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        minHeight: '100vh',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         paddingLeft: "280px",
     },
     formContainer: {
         width: '90%',
-        padding: '5px',
+        padding: '10px',
         borderRadius: '8px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         textAlign: 'center',
@@ -116,15 +174,28 @@ const styles = {
         color: '#333',
         marginBottom: '20px',
     },
+    filtersContainer: {
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "15px",
+        alignItems: "center"
+    },
     searchBar: {
-        width: '95%',
         padding: '10px',
-        marginBottom: '15px',
         border: '1px solid #ccc',
         borderRadius: '5px',
     },
+    downloadButton: {
+        padding: '10px 20px',
+        backgroundColor: '#1976d2',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        height: '40px',
+    },
     table: {
-        width: '70%',
+        width: '100%',
         borderCollapse: 'collapse',
         margin: 'auto',
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
