@@ -57,13 +57,16 @@ import ApprL2 from './pages/ApprL2';
 import ApprL3 from './pages/ApprL3';
 import ApprLv1Shift from './pages/ApprLv1Shift';
 import ApprLv2Shift from './pages/ApprLv2Shift';
-import ApprovalHistory from "./pages/ApprovalHistory";
+import ApprovalHistoryL1 from "./pages/ApprovalHistoryL1";
+import ApprovalHistoryL2 from "./pages/ApprovalHistoryL2";
+import ApprovalHistoryL3 from "./pages/ApprovalHistoryL3";
+import ApprovalHistoryPLD from "./pages/ApprovalHistoryPLD";
+import ApprovalHistorySM from "./pages/ApprovalHistorySM";
 import PetrolLeaderDashboardView from "./pages/PetrolLeaderDashboardView";
 import PetrolLeaderDashboardView2 from "./pages/PetrolLeaderDashboardView2";
 import PetrolLeaderShift from "./pages/PetrolLeaderShift";
 import SecurityManagerDashboard from "./pages/SecurityManagerDashboard";
 import SecurityShift from "./pages/SecurityShift";
-
 
 
 
@@ -92,12 +95,12 @@ const MainContent = styled.div`
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const securityPages = ["/petrolleaderdashboard", "/ViewScheduledShift", "/attendancemarker", "/TimeShiftProgress", "/PetrolLeaderDashboardView", "/PetrolLeaderShift", "/ApprovalHistory"];
-  const apprLv1Pages = ["/ApprLv1dashboard", "/PendingApprovals", "/Lv1Approved", "TimeCardStatusL1", "/ApprL1", "/ApprovalHistory"];
-   const apprLv2Pages = ["/ApprLv2Dashboard", "/PendingLv2Approvals", "/Lv2Approved", "TimeCardStatusL2", "/ApprL2", "/ApprovalHistory"];
-    const apprLv3Pages = ["/ApprLv3Dashboard", "/PendingLv3Approvals", "/Lv3Approved", "TimeCardStatusL3", "/ApprovalHistory"];
+  const securityPages = ["/petrolleaderdashboard", "/ViewScheduledShift", "/attendancemarker", "/ApprovalHistoryPLD", "/PetrolLeaderDashboardView", "/PetrolLeaderShift", "/ApprovalHistory"];
+  const apprLv1Pages = ["/ApprLv1dashboard", "/PendingApprovals", "/Lv1Approved", "TimeCardStatusL1", "/ApprL1", "/ApprovalHistoryL1"];
+   const apprLv2Pages = ["/ApprLv2Dashboard", "/PendingLv2Approvals", "/Lv2Approved", "TimeCardStatusL2", "/ApprL2", "/ApprovalHistoryL2"];
+    const apprLv3Pages = ["/ApprLv3Dashboard", "/PendingLv3Approvals", "/Lv3Approved", "TimeCardStatusL3", "/ApprovalHistoryL3"];
   //const apprLv2Pages = ["/approverlv2dashboard"];
-  const securityManagerPages = ["/SecurityManagerDashboard", "/SecurityManager","/SMNavbar", "/SMSidebar", "/ApprovalHistory"];
+  const securityManagerPages = ["/SecurityManagerDashboard", "/SecurityManager","/SMNavbar", "/SMSidebar", "/ApprovalHistorySM"];
   const companyPages = ["/CompanyUserDashboard", "/ViewWorkForm", "/CompanyUserNavbar", "/CompanySidebar"];
 
   const isSecurityPage = securityPages.includes(location.pathname);
@@ -235,7 +238,11 @@ function App() {
           <Route path="/ApprLv1Shift" element={<ApprLv1Shift />} />
           <Route path="/ApprLv2Shift" element={<ApprLv2Shift />} />
           <Route path="/PetrolLeaderDashboardView2" element={<PetrolLeaderDashboardView2 />} />
-          <Route path="/ApprovalHistory" element={<ApprovalHistory />} />
+          <Route path="/ApprovalHistoryL1" element={<ApprovalHistoryL1 />} />
+          <Route path="/ApprovalHistoryL2" element={<ApprovalHistoryL2 />} />
+          <Route path="/ApprovalHistoryL3" element={<ApprovalHistoryL3 />} />
+          <Route path="/ApprovalHistorySM" element={<ApprovalHistorySM />} />
+          <Route path="/ApprovalHistoryPLD" element={<ApprovalHistoryPLD />} />
           
       
           

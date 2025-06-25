@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const ApprovalHistory = () => {
+const ApprovalHistorySM = () => {
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [officerTypeFilter, setOfficerTypeFilter] = useState('');
@@ -42,13 +42,13 @@ const ApprovalHistory = () => {
         <h2 style={styles.heading}>Approval History</h2>
 
         <div style={styles.filtersRow}>
-         <input
-          type="text"
-          placeholder="Search by NIC, Officer Type, ID, Action, or Remarks..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={styles.searchBar}
-        />
+          <input
+            type="text"
+            placeholder="Search by NIC, Officer Type, ID, Action, or Remarks..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={styles.searchBar}
+          />
 
           <select
             value={officerTypeFilter}
@@ -116,19 +116,20 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    backgroundImage: "url('background.png')",
+    paddingLeft: "280px",
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
   formContainer: {
-  width: '85%',
-  padding: '20px',
-  backgroundColor: 'rgba(255, 255, 255, 0.45)', // changed from 0.95 to 0.85
-  borderRadius: '8px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  textAlign: 'center',
-},
-
+    width: '85%',
+    padding: '20px',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    overflowY: 'auto',
+    maxHeight: '90vh',
+  },
   heading: {
     fontSize: '24px',
     color: 'black',
@@ -200,4 +201,4 @@ const styles = {
   },
 };
 
-export default ApprovalHistory;
+export default ApprovalHistorySM;

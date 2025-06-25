@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const TimeShiftProgress = () => {
+const ApprovalHistoryL1 = () => {
   const [shifts, setShifts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [officerTypeFilter, setOfficerTypeFilter] = useState('');
@@ -201,4 +201,4 @@ const styles = {
   },
 };
 
-export default TimeShiftProgress;
+export default ApprovalHistoryL1;
